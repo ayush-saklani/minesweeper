@@ -1,0 +1,8 @@
+img {
+    height: 50px;
+    background-image: "assets/blank.jpg";
+    src: "assets/blank.jpg";
+}
+body{
+    background-color: rgb(29, 29, 29);
+}
