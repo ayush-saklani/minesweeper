@@ -16,8 +16,8 @@
     </div>
     <div class="container row mx-auto">
         <div class="container text-center col-md-6">
-            <table>
-                <tr>
+            <table id="tab">
+                <!-- <tr>
                     <td><img src="assets/blank.jpg"></td>
                     <td><img src="assets/blank.jpg"></td>
                     <td><img src="assets/1.jpg"></td>
@@ -115,21 +115,35 @@
                     <td><img src="assets/blank.jpg"></td>
                     <td><img src="assets/blank.jpg"></td>
                     <td><img id="11" src="assets/blank.jpg"></td>
-                </tr>
+                </tr> -->
             </table>
         </div>
-        <div class="container text-center col-md-6">
+        <div class="container text-center col-md-6 mt-2">
             <button class="btn btn-lg btn-outline-light">Reset</button>
+            <button class="btn btn-lg btn-outline-light" id="go">GO</button>
         </div>
     </div>
     <script>
+        let size = 7;
+        document.getElementById("go").addEventListener("click", ()=>{
+            let tab = document.getElementById("tab");
+            for (let i = 0; i < size; i++) {
+                let row = document.createElement("tr");
+                for (let j = 0; j < size; j++) {
+                    let col = document.createElement("td");
+                    let img = document.createElement("img")
+                    img.setAttribute("src", "assets/blank.jpg");
+                    img.setAttribute("id", i+""+j);
+                    col.appendChild(img);
+                    row.appendChild(col);
+                }
+                tab.appendChild(row);
+            }
+        });
+
         let flag=0;
         let a = document.getElementById("11").addEventListener("contextmenu",()=>{
-            if (flag%2==0) {
-                document.getElementById("11").setAttribute("src","assets/blank.jpg")
-            } else {
-                document.getElementById("11").setAttribute("src","assets/redflag.jpg")
-            }
+            document.getElementById("11").setAttribute("src",flag%2==0?"assets/blank.jpg":"assets/redflag.jpg");
             flag++;    
         });
     </script>
