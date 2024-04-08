@@ -24,14 +24,14 @@ let gamecal = [
 for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
         if(game[i][j]!=9){
-            if((j+1)<size && game[i][j+1]==9) game[i][j]++;
-            if((j-1)>0 && game[i][j-1]==9) game[i][j]++;
-            if((i-1)>0 && game[i-1][j]==9) game[i][j]++;
-            if((i+1)<size && game[i+1][j]==9) game[i][j]++;
-            if((i-1)>0 && (j+1)<size && game[i-1][j+1]==9) game[i][j]++;
-            if((i+1)<size && (j+1)<size && game[i+1][j+1]==9) game[i][j]++;
-            if((i-1)>0 && (j-1)>0 && game[i-1][j-1]==9) game[i][j]++;
-            if((i+1)<size && (j-1)>0 && game[i+1][j-1]==9) game[i][j]++;
+            if( ((j+1)<size && game[i][j+1]==9)                 )game[i][j]++;
+            if( ((j-1)>0 && game[i][j-1]==9)                    )game[i][j]++;
+            if( ((i-1)>0 && game[i-1][j]==9)                    )game[i][j]++;
+            if( ((i+1)<size && game[i+1][j]==9)                 )game[i][j]++;
+            if( ((i-1)>0 && (j+1)<size && game[i-1][j+1]==9)    )game[i][j]++;
+            if( ((i+1)<size && (j+1)<size && game[i+1][j+1]==9) )game[i][j]++;
+            if( ((i-1)>0 && (j-1)>0 && game[i-1][j-1]==9)       )game[i][j]++;
+            if( ((i+1)<size && (j-1)>0 && game[i+1][j-1]==9)    )game[i][j]++;
         }
     }
 }
