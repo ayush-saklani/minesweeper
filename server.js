@@ -1,38 +1,44 @@
 let size = 9;
 let game = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 9, 0, 0, 0, 0, 9, 0, 0],
-    [0, 0, 9, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 9, 0, 0, 0],
-    [0, 9, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
-let gamecal = [
-    [1, 1, 1, 0, 0, 1, 1, 1, 0],
-    [1, 9, 2, 1, 0, 1, 9, 1, 0],
-    [1, 2, 9, 1, 0, 1, 1, 1, 0],
-    [0, 1, 1, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 1, 1, 0, 0],
-    [1, 1, 1, 0, 1, 9, 1, 0, 0],
-    [1, 9, 1, 0, 1, 1, 1, 0, 0],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0]
-  ]
-for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
-        if (game[i][j] != 9) {
-            if ((j + 1) < size && game[i][j + 1] == 9) game[i][j]++;
-            if ((j - 1) > 0 && game[i][j - 1] == 9) game[i][j]++;
-            if ((i - 1) > 0 && game[i - 1][j] == 9) game[i][j]++;
-            if ((i + 1) < size && game[i + 1][j] == 9) game[i][j]++;
-            if ((i - 1) > 0 && (j + 1) < size && game[i - 1][j + 1] == 9) game[i][j]++;
-            if ((i + 1) < size && (j + 1) < size && game[i + 1][j + 1] == 9) game[i][j]++;
-            if ((i - 1) > 0 && (j - 1) > 0 && game[i - 1][j - 1] == 9) game[i][j]++;
-            if ((i + 1) < size && (j - 1) > 0 && game[i + 1][j - 1] == 9) game[i][j]++;
-        }
+const get_random_mines = (mines,range) => {
+    let arr = [];
+    for (let i = 0; i < mines; i++) {
+        let a = Math.ceil(Math.random() * range);
+        arr.includes(a) ? i-- : arr.push(a);
     }
+    return arr;
 }
-console.log(game);
+const playboard = (mines,range) => {
+    let bomb_pos = get_random_mines(mines,range);
+    let arr = [];
+    let temp = 1 ;
+    for (let i = 0; i < size; i++) {
+        let temparr = [];
+        for (let j = 0; j < size; j++) {
+            if(bomb_pos.includes(temp)){
+                temparr.push(9);
+            }
+            else{
+                temparr.push(0);
+            }
+            temp++;
+        }
+        arr.push(temparr);
+    }
+    return arr;
+}
+
+console.log(calc(9,81));
+// console.log(Math.random()*10);
+
+// console.log((Array.from({length: 40}, () => Math.floor(Math.random() * 40))).sort());

@@ -2,19 +2,13 @@ let size = 9;
 let mines = 10;
 let pixel_size = 40;
 document.getElementById("EASY").addEventListener("click", () => {
-    size=9;mines=10;
-    pixel_size = 40;
-    document.getElementsByClassName("imgb");
+    size=9; mines=10; pixel_size = 40;
 });
 document.getElementById("MEDIUM").addEventListener("click", () => {
-    size=16;mines=40;
-    pixel_size = 30;
-    document.getElementsByClassName("imgb").height = "20";
+    size=16; mines=40; pixel_size = 30;
 });
 document.getElementById("HARD").addEventListener("click", () => {
-    size=23;mines=99;
-    pixel_size = 25;
-    document.getElementsByClassName("imgb").height = "20";
+    size=23; mines=99; pixel_size = 25;
 });
 document.getElementById("go").addEventListener("click", () => {
     let tabparent = document.getElementById("tabparent");
@@ -45,50 +39,53 @@ document.getElementById("go").addEventListener("click", () => {
 //     document.getElementById("11").setAttribute("src", flag % 2 == 0 ? "assets/blank.jpg" : "assets/redflag.jpg");
 //     flag++;
 // });
-
-let game = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 9, 0, 0, 0, 0, 9, 0, 0],
-    [0, 0, 9, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 9, 0, 0, 0],
-    [0, 9, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]
-]
-let gamecal = [
-    [1, 1, 1, 0, 0, 1, 1, 1, 0],
-    [1, 9, 2, 1, 0, 1, 9, 1, 0],
-    [1, 2, 9, 1, 0, 1, 1, 1, 0],
-    [0, 1, 1, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 1, 1, 0, 0],
-    [1, 1, 1, 0, 1, 9, 1, 0, 0],
-    [1, 9, 1, 0, 1, 1, 1, 0, 0],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0]
-]
-let calc = ()=>{
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
-            if (game[i][j] != 9) {
-                if ((j - 1) > 0 && game[i][j - 1] == 9) game[i][j]++;
-                if ((j + 1) < size && game[i][j + 1] == 9) game[i][j]++;
-                if ((i - 1) > 0 && game[i - 1][j] == 9) game[i][j]++;
-                if ((i + 1) < size && game[i + 1][j] == 9) game[i][j]++;
-                if ((i - 1) > 0 && (j + 1) < size && game[i - 1][j + 1] == 9) game[i][j]++;
-                if ((i + 1) < size && (j + 1) < size && game[i + 1][j + 1] == 9) game[i][j]++;
-                if ((i - 1) > 0 && (j - 1) > 0 && game[i - 1][j - 1] == 9) game[i][j]++;
-                if ((i + 1) < size && (j - 1) > 0 && game[i + 1][j - 1] == 9) game[i][j]++;
-            }
-        }
-    }
-}
 document.getElementById("show").addEventListener("click", () => {
+    let yoyo = calc(mines,size*size)
+    console.log(yoyo)
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
             let img = document.getElementById(i+""+j);
-            img.setAttribute("src", "assets/"+gamecal[i][j]+".jpg");
+            img.setAttribute("src", "assets/"+yoyo[i][j]+".jpg");
         }
     }
 });
+const get_random_mines = (mines,range) => { //function will return the random position of mines 
+    let random_mine_pos = [];
+    for (let i = 0; i < mines; i++) {
+        let a = Math.ceil(Math.random() * range);
+        random_mine_pos.includes(a) ? i-- : random_mine_pos.push(a);
+    }
+    return random_mine_pos;
+}
+const playboard = (mines,range) => { //function will return the board with mines
+    let bomb_pos = get_random_mines(mines,range);
+    let set_board = [];
+    let temp = 1 ;
+    for (let i = 0; i < size; i++) {
+        let temparr = [];
+        for (let j = 0; j < size; j++) {
+            bomb_pos.includes(temp) ? temparr.push(9) : temparr.push(0);
+            temp++;
+        }
+        set_board.push(temparr);
+    }
+    return set_board;
+}
+const calc = (mines,range)=>{ //function will return the board with final calculations and numbers calculations
+    let board = playboard(mines,range);
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            if (board[i][j] != 9) {
+                if ((j - 1) > 0 && board[i][j - 1] == 9) board[i][j]++;
+                if ((j + 1) < size && board[i][j + 1] == 9) board[i][j]++;
+                if ((i - 1) > 0 && board[i - 1][j] == 9) board[i][j]++;
+                if ((i + 1) < size && board[i + 1][j] == 9) board[i][j]++;
+                if ((i - 1) > 0 && (j + 1) < size && board[i - 1][j + 1] == 9) board[i][j]++;
+                if ((i + 1) < size && (j + 1) < size && board[i + 1][j + 1] == 9) board[i][j]++;
+                if ((i - 1) > 0 && (j - 1) > 0 && board[i - 1][j - 1] == 9) board[i][j]++;
+                if ((i + 1) < size && (j - 1) > 0 && board[i + 1][j - 1] == 9) board[i][j]++;
+            }
+        }
+    }
+    return board;
+}
