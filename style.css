@@ -1,20 +1,16 @@
-img {
-    height: 50px;
+.navbar{
+    /* height: 50px; */
+    background-color: rgba(0, 0, 0, 0.37);
+}
+#tabparent img{
+    /* height: 40px; */
     background-image: "assets/blank.jpg";
     src: "assets/blank.jpg";
 }
 body{
-    background-color: rgb(29, 29, 29);
+    background-color: rgb(75, 75, 75);
 }
-.b1{
-   background-image: "assets/1.jpg"; 
-}
-.b2{
-   background-image: "assets/1.jpg"; 
-}
-.b3{
-   background-image: "assets/1.jpg"; 
-}
-.b4{
-   background-image: "assets/1.jpg"; 
+#tabparent{
+    padding: 10px;
+    background-color: rgb(36, 36, 36);
 }

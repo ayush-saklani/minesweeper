@@ -1,4 +1,21 @@
 let size = 9;
+let mines = 10;
+let pixel_size = 40;
+document.getElementById("EASY").addEventListener("click", () => {
+    size=9;mines=10;
+    pixel_size = 40;
+    document.getElementsByClassName("imgb");
+});
+document.getElementById("MEDIUM").addEventListener("click", () => {
+    size=16;mines=40;
+    pixel_size = 30;
+    document.getElementsByClassName("imgb").height = "20";
+});
+document.getElementById("HARD").addEventListener("click", () => {
+    size=23;mines=99;
+    pixel_size = 25;
+    document.getElementsByClassName("imgb").height = "20";
+});
 document.getElementById("go").addEventListener("click", () => {
     let tabparent = document.getElementById("tabparent");
     let existingTable = document.getElementById("tab");
@@ -12,7 +29,9 @@ document.getElementById("go").addEventListener("click", () => {
         for (let j = 0; j < size; j++) {
             let col = document.createElement("td");
             let img = document.createElement("img");
+            img.height=pixel_size;
             img.setAttribute("src", "assets/blank.jpg");
+            img.setAttribute("class", "imgb");
             img.setAttribute("id", i + "" + j);
             col.appendChild(img);
             row.appendChild(col);
