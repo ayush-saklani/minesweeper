@@ -1,16 +1,8 @@
-let size = 9;
+let size = 9;   // default values is easy mode so values
 let mines = 10;
 let pixel_size = 40;
-document.getElementById("EASY").addEventListener("click", () => {
-    size=9; mines=10; pixel_size = 40;
-});
-document.getElementById("MEDIUM").addEventListener("click", () => {
-    size=16; mines=40; pixel_size = 30;
-});
-document.getElementById("HARD").addEventListener("click", () => {
-    size=23; mines=99; pixel_size = 25;
-});
-document.getElementById("go").addEventListener("click", () => {
+
+const build_new_board = () => {
     let tabparent = document.getElementById("tabparent");
     let existingTable = document.getElementById("tab");
     if (existingTable) {
@@ -33,22 +25,7 @@ document.getElementById("go").addEventListener("click", () => {
         tab.appendChild(row);
     }
     tabparent.appendChild(tab); // Add the new table to the parent element
-});
-// let flag = 0;
-// let a = document.getElementById("11").addEventListener("contextmenu", () => {
-//     document.getElementById("11").setAttribute("src", flag % 2 == 0 ? "assets/blank.jpg" : "assets/redflag.jpg");
-//     flag++;
-// });
-document.getElementById("show").addEventListener("click", () => {
-    let yoyo = calc(mines,size*size)
-    console.log(yoyo)
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
-            let img = document.getElementById(i+""+j);
-            img.setAttribute("src", "assets/"+yoyo[i][j]+".jpg");
-        }
-    }
-});
+}
 const get_random_mines = (mines,range) => { //function will return the random position of mines 
     let random_mine_pos = [];
     for (let i = 0; i < mines; i++) {
@@ -89,3 +66,44 @@ const calc = (mines,range)=>{ //function will return the board with final calcul
     }
     return board;
 }
+
+
+
+document.getElementById("EASY").addEventListener("click", () => {
+    size=9; 
+    mines=10; 
+    pixel_size = 40; 
+    build_new_board();
+});
+document.getElementById("MEDIUM").addEventListener("click", () => {
+    size=16; 
+    mines=40; 
+    pixel_size = 30; 
+    build_new_board();
+});
+document.getElementById("HARD").addEventListener("click", () => {
+    size=23; 
+    mines=99; 
+    pixel_size = 25; 
+    build_new_board();
+});
+// document.getElementById("go").addEventListener("click",build_new_board());
+
+
+document.getElementById("show").addEventListener("click", () => {
+    let yoyo = calc(mines,size*size)
+    console.log(yoyo)
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            let img = document.getElementById(i+""+j);
+            img.setAttribute("src", "assets/"+yoyo[i][j]+".jpg");
+        }
+    }
+});
+
+
+// let flag = 0;
+// let a = document.getElementById("11").addEventListener("contextmenu", () => {
+//     document.getElementById("11").setAttribute("src", flag % 2 == 0 ? "assets/blank.jpg" : "assets/redflag.jpg");
+//     flag++;
+// });
