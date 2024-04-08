@@ -24,40 +24,7 @@
             <button class="btn btn-lg btn-outline-light" id="go">GO</button>
         </div>
     </div>
-    <script>
-        let size = 7;
-
-        document.getElementById("go").addEventListener("click", () => {
-            let tabparent = document.getElementById("tabparent");
-            let existingTable = document.getElementById("tab");
-            if (existingTable) {
-                tabparent.removeChild(existingTable); // Remove existing table if it exists
-            }
-            let tab = document.createElement("table");
-            tab.setAttribute("id", "tab");
-
-            for (let i = 0; i < size; i++) {
-                let row = document.createElement("tr");
-                for (let j = 0; j < size; j++) {
-                    let col = document.createElement("td");
-                    let img = document.createElement("img");
-                    img.setAttribute("src", "assets/blank.jpg");
-                    img.setAttribute("id", i + "" + j);
-                    col.appendChild(img);
-                    row.appendChild(col);
-                }
-                tab.appendChild(row);
-            }
-
-            tabparent.appendChild(tab); // Add the new table to the parent element
-        });
-
-        let flag = 0;
-        let a = document.getElementById("11").addEventListener("contextmenu", () => {
-            document.getElementById("11").setAttribute("src", flag % 2 == 0 ? "assets/blank.jpg" : "assets/redflag.jpg");
-            flag++;
-        });
-    </script>
+    <script src="index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
