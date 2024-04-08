@@ -1,6 +1,8 @@
 let size = 9;   // default values is easy mode so values
+let leng = 9;
+let heig = 9;
 let mines = 10;
-let pixel_size = 40;
+let pixel_size = 50;
 
 const build_new_board = () => {
     let tabparent = document.getElementById("tabparent");
@@ -10,9 +12,9 @@ const build_new_board = () => {
     }
     let tab = document.createElement("table");
     tab.setAttribute("id", "tab");
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < heig; i++) {
         let row = document.createElement("tr");
-        for (let j = 0; j < size; j++) {
+        for (let j = 0; j < leng; j++) {
             let col = document.createElement("td");
             let img = document.createElement("img");
             img.height=pixel_size;
@@ -38,9 +40,9 @@ const playboard = (mines,range) => { //function will return the board with mines
     let bomb_pos = get_random_mines(mines,range);
     let set_board = [];
     let temp = 1 ;
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < heig; i++) {
         let temparr = [];
-        for (let j = 0; j < size; j++) {
+        for (let j = 0; j < leng; j++) {
             bomb_pos.includes(temp) ? temparr.push(9) : temparr.push(0);
             temp++;
         }
@@ -50,51 +52,54 @@ const playboard = (mines,range) => { //function will return the board with mines
 }
 const calc = (mines,range)=>{ //function will return the board with final calculations and numbers calculations
     let board = playboard(mines,range);
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
+    for (let i = 0; i < heig; i++) {
+        for (let j = 0; j < leng; j++) {
             if (board[i][j] != 9) {
                 if ((j - 1) > 0 && board[i][j - 1] == 9) board[i][j]++;
-                if ((j + 1) < size && board[i][j + 1] == 9) board[i][j]++;
                 if ((i - 1) > 0 && board[i - 1][j] == 9) board[i][j]++;
-                if ((i + 1) < size && board[i + 1][j] == 9) board[i][j]++;
-                if ((i - 1) > 0 && (j + 1) < size && board[i - 1][j + 1] == 9) board[i][j]++;
-                if ((i + 1) < size && (j + 1) < size && board[i + 1][j + 1] == 9) board[i][j]++;
+                if ((j + 1) < leng && board[i][j + 1] == 9) board[i][j]++;
+                if ((i + 1) < heig && board[i + 1][j] == 9) board[i][j]++;
                 if ((i - 1) > 0 && (j - 1) > 0 && board[i - 1][j - 1] == 9) board[i][j]++;
-                if ((i + 1) < size && (j - 1) > 0 && board[i + 1][j - 1] == 9) board[i][j]++;
+                if ((i - 1) > 0 && (j + 1) < size && board[i - 1][j + 1] == 9) board[i][j]++;
+                if ((i + 1) < heig && (j - 1) > 0 && board[i + 1][j - 1] == 9) board[i][j]++;
+                if ((i + 1) < heig && (j + 1) < leng && board[i + 1][j + 1] == 9) board[i][j]++;
             }
         }
     }
     return board;
 }
 
-
-
 document.getElementById("EASY").addEventListener("click", () => {
-    size=9; 
-    mines=10; 
-    pixel_size = 40; 
+    size = 9;
+    leng = 9; 
+    heig = 9;  
+    mines = 10; 
+    pixel_size = 55; 
     build_new_board();
 });
 document.getElementById("MEDIUM").addEventListener("click", () => {
-    size=16; 
-    mines=40; 
+    size = 16; 
+    leng =16; 
+    heig =16; 
+    mines = 40; 
     pixel_size = 30; 
     build_new_board();
 });
 document.getElementById("HARD").addEventListener("click", () => {
-    size=23; 
-    mines=99; 
-    pixel_size = 25; 
+    size = 23; 
+    leng = 30; 
+    heig = 16; 
+    mines = 99; 
+    pixel_size = 30; 
     build_new_board();
 });
 // document.getElementById("go").addEventListener("click",build_new_board());
 
-
 document.getElementById("show").addEventListener("click", () => {
-    let yoyo = calc(mines,size*size)
+    let yoyo = calc(mines,leng*heig)
     console.log(yoyo)
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
+    for (let i = 0; i < heig; i++) {
+        for (let j = 0; j < leng; j++) {
             let img = document.getElementById(i+""+j);
             img.setAttribute("src", "assets/"+yoyo[i][j]+".jpg");
         }
