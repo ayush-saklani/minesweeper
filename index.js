@@ -235,12 +235,14 @@ document.getElementById("HARD").addEventListener("click", () => {
 // document.getElementById("go").addEventListener("click",build_new_board());
 
 document.getElementById("show").addEventListener("click", () => {
-    global_board = calc(mines, leng * heig)
-    console.log(global_board)
+    // global_board = calc(mines, leng * heig)
+    // console.log(global_board)
     for (let i = 0; i < heig; i++) {
         for (let j = 0; j < leng; j++) {
-            let img = document.getElementById(i + "x" + j);
-            img.setAttribute("src", "assets/" + global_board[i][j].slot + ".jpg");
+            global_board[i][j].hide = false;
+            global_board[i][j].block = 1;
+            lose_audio.play();
+            refresh_board();
         }
     }
 });
