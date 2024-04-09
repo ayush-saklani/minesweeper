@@ -2,7 +2,7 @@
     font-family: "Montserrat", sans-serif;
 }
 .navbar{
-    background-color: rgba(0, 0, 0, 0.605);
+    background-color: #16181A;
 }
 #tabparent img{
     /* height: 40px; */
@@ -10,11 +10,11 @@
     src: "assets/blank.jpg";
 }
 body{
-    background-color: rgb(75, 75, 75);
+    background-color: #383D40;
 }
 #tabparent{
     padding: 10px;
-    background-color: rgb(36, 36, 36);
+    background-color: #16181A;
 }
 .center {
     margin-left: auto;
