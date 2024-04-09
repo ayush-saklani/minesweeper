@@ -145,6 +145,7 @@ const build_new_board = () => {
     }
     let tab = document.createElement("table");
     tab.setAttribute("id", "tab");
+    tab.setAttribute("class", "center");
     for (let i = 0; i < heig; i++) {
         let row = document.createElement("tr");
         for (let j = 0; j < leng; j++) {
