@@ -3,7 +3,11 @@ let leng = 9;
 let heig = 9;
 let mines = 10;
 let pixel_size = 50;
-
+let flag = 0;
+const red_flag = (id) =>{
+    document.getElementById(id).setAttribute("src", flag % 2 == 0 ? "assets/blank.jpg" : "assets/redflag.jpg");
+    flag++;
+}
 const build_new_board = () => {
     let tabparent = document.getElementById("tabparent");
     let existingTable = document.getElementById("tab");
@@ -20,7 +24,8 @@ const build_new_board = () => {
             img.height=pixel_size;
             img.setAttribute("src", "assets/blank.jpg");
             img.setAttribute("class", "imgb");
-            img.setAttribute("id", i + "" + j);
+            img.setAttribute("id", i+"x"+j);
+            img.addEventListener("contextmenu", () => red_flag(i + "x" + j));
             col.appendChild(img);
             row.appendChild(col);
         }
@@ -55,13 +60,13 @@ const calc = (mines,range)=>{ //function will return the board with final calcul
     for (let i = 0; i < heig; i++) {
         for (let j = 0; j < leng; j++) {
             if (board[i][j] != 9) {
-                if ((j - 1) > 0 && board[i][j - 1] == 9) board[i][j]++;
-                if ((i - 1) > 0 && board[i - 1][j] == 9) board[i][j]++;
+                if ((j - 1) >= 0 && board[i][j - 1] == 9) board[i][j]++;
+                if ((i - 1) >= 0 && board[i - 1][j] == 9) board[i][j]++;
                 if ((j + 1) < leng && board[i][j + 1] == 9) board[i][j]++;
                 if ((i + 1) < heig && board[i + 1][j] == 9) board[i][j]++;
-                if ((i - 1) > 0 && (j - 1) > 0 && board[i - 1][j - 1] == 9) board[i][j]++;
-                if ((i - 1) > 0 && (j + 1) < size && board[i - 1][j + 1] == 9) board[i][j]++;
-                if ((i + 1) < heig && (j - 1) > 0 && board[i + 1][j - 1] == 9) board[i][j]++;
+                if ((i - 1) >= 0 && (j - 1) >= 0 && board[i - 1][j - 1] == 9) board[i][j]++;
+                if ((i - 1) >= 0 && (j + 1) < size && board[i - 1][j + 1] == 9) board[i][j]++;
+                if ((i + 1) < heig && (j - 1) >= 0 && board[i + 1][j - 1] == 9) board[i][j]++;
                 if ((i + 1) < heig && (j + 1) < leng && board[i + 1][j + 1] == 9) board[i][j]++;
             }
         }
@@ -100,15 +105,9 @@ document.getElementById("show").addEventListener("click", () => {
     console.log(yoyo)
     for (let i = 0; i < heig; i++) {
         for (let j = 0; j < leng; j++) {
-            let img = document.getElementById(i+""+j);
+            let img = document.getElementById(i+"x"+j);
             img.setAttribute("src", "assets/"+yoyo[i][j]+".jpg");
         }
     }
 });
 
-
-// let flag = 0;
-// let a = document.getElementById("11").addEventListener("contextmenu", () => {
-//     document.getElementById("11").setAttribute("src", flag % 2 == 0 ? "assets/blank.jpg" : "assets/redflag.jpg");
-//     flag++;
-// });
