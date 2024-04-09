@@ -26,5 +26,5 @@
 ## Installation
 1. Clone or download the repository.
 2. Open the `index.html` file in your web browser.
-3. **OR** go to [**mrminesweeper.vercel.app**](https://mrminesweeper.vercel.app/)
+3. **OR** go to [**mrminesweeper.vercel.app**](https://mrminesweeper.vercel.app/) 
  
