@@ -10,11 +10,6 @@ a{
 .social-links{
     background-color: #00000018;
 }
-#tabparent img{
-    /* height: 40px; */
-    background-image: "assets/blank.jpg";
-    src: "assets/blank.jpg";
-}
 body{
     background-color: #383D40;
 }

@@ -13,20 +13,29 @@ const refresh_board = () => {
         for (let j = 0; j < leng; j++) {
             let img = document.getElementById(i + "x" + j);
             if (global_board[i][j].hide == false) {
-                img.setAttribute("src", "assets/" + global_board[i][j].slot + ".jpg");
+                img.setAttribute("src", "assets/image/" + global_board[i][j].slot + ".jpg");
                 check_win++;
             }
             else {
                 if (global_board[i][j].flag == 1) {
-                    img.setAttribute("src", "assets/redflag.jpg");
+                    img.setAttribute("src", "assets/image/redflag.jpg");
                 }
                 else {
-                    img.setAttribute("src", "assets/blank.jpg");
+                    img.setAttribute("src", "assets/image/blank.jpg");
                 }
             }
         }
     }
     if (check_win == ((leng * heig) - mines)) {
+        for (let i = 0; i < heig; i++) {
+            for (let j = 0; j < leng; j++) {
+                global_board[i][j].block = 1;
+                if (global_board[i][j].slot == 9) {
+                    global_board[i][j].hide = false;
+                }
+            }
+        }
+        refresh_board();
         win_audio.play();
     }
 }
@@ -152,7 +161,7 @@ const build_new_board = () => {
             let col = document.createElement("td");
             let img = document.createElement("img");
             img.height = pixel_size;
-            img.setAttribute("src", "assets/blank.jpg");
+            img.setAttribute("src", "assets/image/blank.jpg");
             img.setAttribute("class", "imgb");
             img.setAttribute("id", i + "x" + j);
             img.addEventListener("contextmenu", () => red_flag(i + "x" + j));
