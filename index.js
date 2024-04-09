@@ -5,126 +5,136 @@ let mines = 10;
 let pixel_size = 50;
 let global_board = [];
 let flag = 0;
-
+let win_audio = new Audio('assets/audio/ms_airship_clear.wav');
+let lose_audio = new Audio('assets/audio/ms_gameover.wav');
 const refresh_board = () => {
+    let check_win = 0;
     for (let i = 0; i < heig; i++) {
         for (let j = 0; j < leng; j++) {
             let img = document.getElementById(i + "x" + j);
-            if(global_board[i][j].hide == false){
+            if (global_board[i][j].hide == false) {
                 img.setAttribute("src", "assets/" + global_board[i][j].slot + ".jpg");
+                check_win++;
             }
-            else{
-                if(global_board[i][j].flag==1){
+            else {
+                if (global_board[i][j].flag == 1) {
                     img.setAttribute("src", "assets/redflag.jpg");
+                }
+                else {
+                    img.setAttribute("src", "assets/blank.jpg");
                 }
             }
         }
     }
+    if (check_win == ((leng * heig) - mines)) {
+        win_audio.play();
+    }
 }
 const red_flag = (id) => {
     const [i, j] = id.split("x");
-    if(global_board[i][j].flag == 0){
-        global_board[i][j].flag++;
-        refresh_board();
-        // document.getElementById(id).setAttribute("src", flag % 2 == 0 ? "assets/blank.jpg" : "assets/redflag.jpg");
-        // flag++;
+    if (global_board[i][j].block == 1) {
+        return;
     }
-    else if(global_board[i][j].flag==1){
-        global_board[i][j].flag--;
+    if (global_board[i][j].flag == 0) {
+        global_board[i][j].flag = 1;
+        refresh_board();
+    }
+    else if (global_board[i][j].flag == 1) {
+        global_board[i][j].flag = 0;
         refresh_board();
     }
 }
 const gameover = () => {
     for (let i = 0; i < heig; i++) {
         for (let j = 0; j < leng; j++) {
-            let img = document.getElementById(i + "x" + j);
-            if(global_board[i][j].slot == 9){
+            global_board[i][j].block = 1;
+            if (global_board[i][j].slot == 9) {
                 global_board[i][j].hide = false;
             }
         }
     }
     refresh_board();
+    lose_audio.play();
 }
 const explore = (i, j) => {
-    console.log("Exploring:", i, j);
-    console.log("Board:", global_board);
-    if (i < 0 || i >= heig || j < 0 || j >= leng) {
-        console.error("Indices out of bounds:", i, j);
+    if (global_board[i][j].flag == 1 || global_board[i][j].block == 1) {
         return;
     }
-    if (global_board[i][j].slot == 0) {
-        let temp = 0;
-        global_board[i][j].hide = false
-        if ((j - 1) >= 0 && global_board[i][j - 1].hide == true) {
-            global_board[i][j - 1].hide = false;
-            temp++;
+    else {
+        if (global_board[i][j].slot == 0) {
+            let temp = 0;
+            global_board[i][j].hide = false
+            if ((j - 1) >= 0 && global_board[i][j - 1].hide == true) {
+                global_board[i][j - 1].hide = false;
+                temp++;
+            }
+            if ((i - 1) >= 0 && global_board[i - 1][j].hide == true) {
+                global_board[i - 1][j].hide = false;
+                temp++;
+            }
+            if ((j + 1) < leng && global_board[i][j + 1].hide == true) {
+                global_board[i][j + 1].hide = false;
+                temp++;
+            }
+            if ((i + 1) < heig && global_board[i + 1][j].hide == true) {
+                global_board[i + 1][j].hide = false;
+                temp++;
+            }
+            if ((i - 1) >= 0 && (j - 1) >= 0 && global_board[i - 1][j - 1].hide == true) {
+                global_board[i - 1][j - 1].hide = false;
+                temp++;
+            }
+            if ((i - 1) >= 0 && (j + 1) < size && global_board[i - 1][j + 1].hide == true) {
+                global_board[i - 1][j + 1].hide = false;
+                temp++;
+            }
+            if ((i + 1) < heig && (j - 1) >= 0 && global_board[i + 1][j - 1].hide == true) {
+                global_board[i + 1][j - 1].hide = false;
+                temp++;
+            }
+            if ((i + 1) < heig && (j + 1) < leng && global_board[i + 1][j + 1].hide == true) {
+                global_board[i + 1][j + 1].hide = false;
+                temp++;
+            }
+            if (temp == 0) {
+                refresh_board();
+            }
+            else {
+                if ((j - 1) >= 0 && global_board[i][j - 1].slot == 0) {
+                    explore((i), (j - 1));
+                }
+                if ((i - 1) >= 0 && global_board[i - 1][j].slot == 0) {
+                    explore((i - 1), (j));
+                }
+                if ((j + 1) < leng && global_board[i][j + 1].slot == 0) {
+                    explore((i), (j + 1));
+                }
+                if ((i + 1) < heig && global_board[i + 1][j].slot == 0) {
+                    explore((i + 1), (j));
+                }
+                if ((i - 1) >= 0 && (j - 1) >= 0 && global_board[i - 1][j - 1].slot == 0) {
+                    explore((i - 1), (j - 1))
+                }
+                if ((i - 1) >= 0 && (j + 1) < size && global_board[i - 1][j + 1].slot == 0) {
+                    explore((i - 1), (j + 1))
+                }
+                if ((i + 1) < heig && (j - 1) >= 0 && global_board[i + 1][j - 1].slot == 0) {
+                    explore((i + 1), (j - 1))
+                }
+                if ((i + 1) < heig && (j + 1) < leng && global_board[i + 1][j + 1].slot == 0) {
+                    explore((i + 1), (j + 1))
+                }
+            }
         }
-        if ((i - 1) >= 0 && global_board[i - 1][j].hide == true) {
-            global_board[i - 1][j].hide = false;
-            temp++;
-        }
-        if ((j + 1) < leng && global_board[i][j + 1].hide == true) {
-            global_board[i][j + 1].hide = false;
-            temp++;
-        }
-        if ((i + 1) < heig && global_board[i + 1][j].hide == true) {
-            global_board[i + 1][j].hide = false;
-            temp++;
-        }
-        if ((i - 1) >= 0 && (j - 1) >= 0 && global_board[i - 1][j - 1].hide == true) {
-            global_board[i - 1][j - 1].hide = false;
-            temp++;
-        }
-        if ((i - 1) >= 0 && (j + 1) < size && global_board[i - 1][j + 1].hide == true) {
-            global_board[i - 1][j + 1].hide = false;
-            temp++;
-        }
-        if ((i + 1) < heig && (j - 1) >= 0 && global_board[i + 1][j - 1].hide == true) {
-            global_board[i + 1][j - 1].hide = false;
-            temp++;
-        }
-        if ((i + 1) < heig && (j + 1) < leng && global_board[i + 1][j + 1].hide == true) {
-            global_board[i + 1][j + 1].hide = false;
-            temp++;
-        }
-        if (temp == 0) {
-            refresh_board();
+        else if (global_board[i][j].slot == 9) {
+            gameover();
         }
         else {
-            if ((j - 1) >= 0 && global_board[i][j - 1].slot == 0) {
-                explore((i), (j - 1));
-            }
-            if ((i - 1) >= 0 && global_board[i - 1][j].slot == 0) {
-                explore((i - 1), (j));
-            }
-            if ((j + 1) < leng && global_board[i][j + 1].slot == 0) {
-                explore((i), (j + 1));
-            }
-            if ((i + 1) < heig && global_board[i + 1][j].slot == 0) {
-                explore((i + 1), (j));
-            }
-            if ((i - 1) >= 0 && (j - 1) >= 0 && global_board[i - 1][j - 1].slot == 0) {
-                explore((i - 1), (j - 1))
-            }
-            if ((i - 1) >= 0 && (j + 1) < size && global_board[i - 1][j + 1].slot == 0) {
-                explore((i - 1), (j + 1))
-            }
-            if ((i + 1) < heig && (j - 1) >= 0 && global_board[i + 1][j - 1].slot == 0) {
-                explore((i + 1), (j - 1))
-            }
-            if ((i + 1) < heig && (j + 1) < leng && global_board[i + 1][j + 1].slot == 0) {
-                explore((i + 1), (j + 1))
-            }
+            global_board[i][j].hide = false;
+            refresh_board();
         }
-    }
-    else if (global_board[i][j].slot == 9){
-        gameover();
-    }
-    else {
-        global_board[i][j].hide = false;
         refresh_board();
     }
-    refresh_board();
 }
 
 const build_new_board = () => {
@@ -145,7 +155,7 @@ const build_new_board = () => {
             img.setAttribute("class", "imgb");
             img.setAttribute("id", i + "x" + j);
             img.addEventListener("contextmenu", () => red_flag(i + "x" + j));
-            img.addEventListener("click", () => explore(i , j));
+            img.addEventListener("click", () => explore(i, j));
             col.appendChild(img);
             row.appendChild(col);
         }
@@ -168,7 +178,8 @@ const playboard = (mines, range) => { //function will return the board with mine
     for (let i = 0; i < heig; i++) {
         let temparr = [];
         for (let j = 0; j < leng; j++) {
-            bomb_pos.includes(temp) ? temparr.push({ "slot": 9, "hide": true ,"flag":0}) : temparr.push({ "slot": 0, "hide": true ,"flag":0});
+            bomb_pos.includes(temp) ? temparr.push({ "slot": 9, "hide": true, "flag": 0, "block": 0 }) :
+                temparr.push({ "slot": 0, "hide": true, "flag": 0, "block": 0 });
             temp++;
         }
         set_board.push(temparr);
