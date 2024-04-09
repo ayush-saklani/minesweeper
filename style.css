@@ -2,7 +2,6 @@
     font-family: "Montserrat", sans-serif;
 }
 .navbar{
-    /* height: 50px; */
     background-color: rgba(0, 0, 0, 0.605);
 }
 #tabparent img{
@@ -22,6 +21,9 @@ body{
     margin-right: auto;
 }
 @media (max-width: 991px) {
+    #mrmime{
+        visibility: hidden;
+    }
     /* .navbar{
         visibility: hidden;
     } */
