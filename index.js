@@ -38,7 +38,7 @@ const refresh_board = () => {
         refresh_board();
         win_audio.play();
     }
-}
+} 
 const red_flag = (id) => {
     const [i, j] = id.split("x");
     if (global_board[i][j].block == 1) {

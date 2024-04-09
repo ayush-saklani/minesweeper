@@ -38,7 +38,7 @@ const playboard = (mines,range) => {
     return arr;
 }
 
-console.log(calc(9,81));
+console.log(calc(9,81)); 
 // console.log(Math.random()*10);
 
 // console.log((Array.from({length: 40}, () => Math.floor(Math.random() * 40))).sort());
