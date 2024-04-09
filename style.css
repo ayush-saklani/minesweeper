@@ -4,6 +4,12 @@
 .navbar{
     background-color: #16181A;
 }
+a{
+    text-decoration: none;
+}
+.social-links{
+    background-color: #00000018;
+}
 #tabparent img{
     /* height: 40px; */
     background-image: "assets/blank.jpg";
