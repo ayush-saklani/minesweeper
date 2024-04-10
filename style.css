@@ -28,6 +28,9 @@ body{
     .navbar img,h2{
         display: none;
     }
+    .socials{
+        display: none;
+    }
 }
 /* @media (max-width: 768px) {
     .navbar img,h2{
