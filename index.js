@@ -2,7 +2,7 @@ let size = 9;   // default values is easy mode so values
 let leng = 9;
 let heig = 9;
 let mines = 10;
-let pixel_size = 50;
+let pixel_size = 55;
 let global_board = [];
 let flag = 0;
 let win_audio = new Audio('assets/audio/ms_airship_clear.wav');
@@ -93,7 +93,7 @@ const explore = (i, j) => {
                 global_board[i - 1][j - 1].hide = false;
                 temp++;
             }
-            if ((i - 1) >= 0 && (j + 1) < size && global_board[i - 1][j + 1].hide == true) {
+            if ((i - 1) >= 0 && (j + 1) < leng && global_board[i - 1][j + 1].hide == true) {
                 global_board[i - 1][j + 1].hide = false;
                 temp++;
             }
@@ -124,7 +124,7 @@ const explore = (i, j) => {
                 if ((i - 1) >= 0 && (j - 1) >= 0 && global_board[i - 1][j - 1].slot == 0) {
                     explore((i - 1), (j - 1))
                 }
-                if ((i - 1) >= 0 && (j + 1) < size && global_board[i - 1][j + 1].slot == 0) {
+                if ((i - 1) >= 0 && (j + 1) < leng && global_board[i - 1][j + 1].slot == 0) {
                     explore((i - 1), (j + 1))
                 }
                 if ((i + 1) < heig && (j - 1) >= 0 && global_board[i + 1][j - 1].slot == 0) {
@@ -206,7 +206,7 @@ const calc = (mines, range) => { //function will return the board with final cal
                 if ((j + 1) < leng && board[i][j + 1].slot == 9) board[i][j].slot++;
                 if ((i + 1) < heig && board[i + 1][j].slot == 9) board[i][j].slot++;
                 if ((i - 1) >= 0 && (j - 1) >= 0 && board[i - 1][j - 1].slot == 9) board[i][j].slot++;
-                if ((i - 1) >= 0 && (j + 1) < size && board[i - 1][j + 1].slot == 9) board[i][j].slot++;
+                if ((i - 1) >= 0 && (j + 1) < leng && board[i - 1][j + 1].slot == 9) board[i][j].slot++;
                 if ((i + 1) < heig && (j - 1) >= 0 && board[i + 1][j - 1].slot == 9) board[i][j].slot++;
                 if ((i + 1) < heig && (j + 1) < leng && board[i + 1][j + 1].slot == 9) board[i][j].slot++;
             }
@@ -255,4 +255,8 @@ document.getElementById("show").addEventListener("click", () => {
             refresh_board();
         }
     }
+});
+window.addEventListener("load", (event) => {
+    global_board = calc(mines, leng * heig)
+    build_new_board();
 });
